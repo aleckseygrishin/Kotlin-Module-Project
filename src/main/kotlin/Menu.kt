@@ -17,6 +17,8 @@ class Menu {
     private val noteNameCreate = "$commonTextCreate заметки"
     private val noteContentCreate = "Введите текст заметки"
     private val exitText = "Вы завершили выполнение программы."
+    private var scanner = Scanner(System.`in`)
+    private var userCommand: String = ""
 
     private val menuArchive = mapOf(
         CREATE_NUMBER to "Создать архив",
@@ -50,12 +52,11 @@ class Menu {
         }
     }
     fun archiveMenu() {
-        var userCommand: String
         while(true) {
             showTextInMenu(TypeMenu.MENU_ARCHIVE)
-            userCommand = Scanner(System.`in`).nextLine()
+            userCommand = scanner.nextLine()
             while(!checkNumberMenu(TypeMenu.MENU_ARCHIVE, userCommand)) {
-                userCommand = Scanner(System.`in`).nextLine()
+                userCommand = scanner.nextLine()
             }
             when(userCommand.toInt()) {
                 0 -> createArchive()
@@ -72,12 +73,11 @@ class Menu {
     }
     private fun notesMenu() {
         openArchive()
-        var userCommand: String
         while(true) {
             showTextInMenu(TypeMenu.MENU_NOTES)
-            userCommand = Scanner(System.`in`).nextLine()
+            userCommand = scanner.nextLine()
             while(!checkNumberMenu(TypeMenu.MENU_NOTES, userCommand))
-                userCommand = Scanner(System.`in`).nextLine()
+                userCommand = scanner.nextLine()
             when(userCommand.toInt()) {
                 0 -> createNote()
                 1 -> {
@@ -95,12 +95,11 @@ class Menu {
 
     private fun noteInsideMenu() {
         openNotesInArchive()
-        var userCommand: String
         while(true) {
             showTextInMenu(TypeMenu.MENU_INSIDE_NOTE)
-            userCommand = Scanner(System.`in`).nextLine()
+            userCommand = scanner.nextLine()
             while(!checkNumberMenu(TypeMenu.MENU_INSIDE_NOTE, userCommand))
-                userCommand = Scanner(System.`in`).nextLine()
+                userCommand = scanner.nextLine()
             when(userCommand.toInt()) {
                 1 -> openNote()
                 2 -> return

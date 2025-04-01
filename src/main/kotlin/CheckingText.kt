@@ -2,12 +2,9 @@ import Helper.checkEmpty
 
 object CheckingText {
     fun String.isInt(): Boolean {
-        when(this.toIntOrNull()) {
-            null -> {
-                println("Введена не цифра!")
-                return false
-            }
-            else -> return true
+        return when(this.toIntOrNull()) {
+            null -> false
+            else -> true
         }
     }
     fun checkNumberMenu(type: TypeMenu, text: String): Boolean {

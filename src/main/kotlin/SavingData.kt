@@ -7,13 +7,15 @@ object SavingData {
     val listArchive: MutableMap<Int, Archive> = mutableMapOf()
     var nowSelectArchive: Int? = null
     private var nowSelectNote: Int? = null
+    private var scanner = Scanner(System.`in`)
+    private var name: String = ""
 
     fun createArchive() {
         menuText.showTextInMenu(TypeMenu.CREATE_ARCHIVE)
-        var name = Scanner(System.`in`).nextLine()
+        name = scanner.nextLine()
 
         while(!checkNameIsContains(name, TypeMenu.CREATE_ARCHIVE)) {
-            name = Scanner(System.`in`).nextLine()
+            name = scanner.nextLine()
         }
 
         listArchive[listArchive.size + 1] = Archive(name)
@@ -25,17 +27,17 @@ object SavingData {
 
     fun createNote() {
         menuText.showTextInMenu(TypeMenu.CREATE_NOTE)
-        var name = Scanner(System.`in`).nextLine()
+        name = scanner.nextLine()
 
         while(!checkNameIsContains(name, TypeMenu.CREATE_NOTE)) {
-            name = Scanner(System.`in`).nextLine()
+            name = scanner.nextLine()
         }
         menuText.showTextInMenu(TypeMenu.CREATE_NOTE_CONTENT)
-        var content = Scanner(System.`in`).nextLine()
+        var content = scanner.nextLine()
         while (!checkEmpty(content))
-            content = Scanner(System.`in`).nextLine()
+            content = scanner.nextLine()
 
-        listArchive[nowSelectArchive]!!.listContent[listArchive[nowSelectArchive]!!.listContent.size + 1]= Note(name!!, content!!)
+        listArchive[nowSelectArchive]!!.listContent[listArchive[nowSelectArchive]!!.listContent.size + 1]= Note(name, content!!)
         println(
             "Заметка с именем '$name' и текстом '$content' добалена."
         )
@@ -77,7 +79,10 @@ object SavingData {
     }
 
     private fun checkNumberOfArchiveOrNotes(type: TypeArchOrNotes, textNumber: String): Boolean {
-        if(!textNumber.isInt()) return false
+        if(!textNumber.isInt()) {
+            println("Введена не цифра!")
+            return false
+        }
         if(!checkEmpty(textNumber)) return false
         when(type){
             TypeArchOrNotes.ARCHIVE -> {
